@@ -186,7 +186,7 @@ getIdList <- function(x){
   rankDf <- x[, 'rank']
   names(rankDf) <- x[, 'rank']
 
-  idDf <- x[, 'id']
+  idDf <- x[, 'name']
   joinedDf <- cbind(data.frame(rankDf,stringsAsFactors=FALSE),
                     data.frame(idDf,stringsAsFactors=FALSE))
   joinedDf <- within(joinedDf,
