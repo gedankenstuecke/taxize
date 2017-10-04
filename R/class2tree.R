@@ -83,15 +83,17 @@ class2tree <- function(input, varstep = TRUE, check = TRUE, ...) {
   taxdis <- tryCatch(taxa2dist(df, varstep = varstep, check = check),
                      error = function(e) e)
 
-  #for (i in 1:ncol(df)){
-  #  df[,i][duplicated(df[,i])] <- NA
-  #}
+  tdf = t(df)
+  for (i in 1:ncol(tdf)){
+    tdf[,i][duplicated(tdf[,i])] <- NA
+  }
+
 
   # check for incorrect dimensions error
   if (is(taxdis, 'simpleError'))
     stop("Try check=FALSE, but see docs for taxa2dist function in the vegan package for details.")
   out <- as.phylo.hclust(hclust(taxdis, ...))
-  res <- list(phylo = out, classification = df, distmat = taxdis,
+  res <- list(phylo = out, classification = t(tdf), distmat = taxdis,
               names = names(input))
   class(res) <- 'classtree'
   return( res )
