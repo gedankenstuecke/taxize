@@ -66,11 +66,11 @@ class2tree <- function(input, varstep = TRUE, check = TRUE, ...) {
 
   dat <- rbind.fill(lapply(input, class2tree_helper))
   # Get rank and ID list
-  rankList <- rbind.fill(lapply(input, get_rank))
-  nameList <- rbind.fill(lapply(input, get_name))
+  rank_df <- rbind.fill(lapply(input, get_rank))
+  id_df <- rbind.fill(lapply(input, get_id))
 
   # Create taxonomy matrix
-  df <- taxonomy_table_creator(nameList,rankList)
+  df <- taxonomy_table_creator(id_df,rank_df)
 
   row.names(df) <- df[,1]
   df <- df[,-1]
@@ -182,17 +182,17 @@ get_rank <- function(x){
   return(outDf)
 }
 
-get_name <- function(x){
+get_id <- function(x){
   rankDf <- x[, 'rank']
   names(rankDf) <- x[, 'rank']
 
-  nameDf <- x[, 'id']
+  idDf <- x[, 'id']
   joinedDf <- cbind(data.frame(rankDf,stringsAsFactors=FALSE),
-                    data.frame(nameDf,stringsAsFactors=FALSE))
+                    data.frame(idDf,stringsAsFactors=FALSE))
   joinedDf <- within(joinedDf,
                      rankDf[rankDf=='no rank'] <-
-                     paste0("norank_",nameDf[rankDf=='no rank']))
-  joinedDf$name <- paste0(joinedDf$nameDf,"#",joinedDf$rankDf)
+                     paste0("norank_",idDf[rankDf=='no rank']))
+  joinedDf$name <- paste0(joinedDf$idDf,"#",joinedDf$rankDf)
 
   df <- data.frame(t(data.frame(rev(joinedDf$name))), stringsAsFactors = FALSE)
   outDf <- data.frame(tip = x[nrow(x), "name"], df, stringsAsFactors = FALSE)
