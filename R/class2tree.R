@@ -83,7 +83,7 @@ class2tree <- function(input, varstep = TRUE, check = TRUE, ...) {
   if (is(taxdis, 'simpleError'))
     stop("Try check=FALSE, but see docs for taxa2dist function in the vegan package for details.")
   out <- as.phylo.hclust(hclust(taxdis, ...))
-  res <- list(phylo = out, classification = dat, distmat = taxdis,
+  res <- list(phylo = out, classification = df, distmat = taxdis,
               names = names(input))
   class(res) <- 'classtree'
   return( res )
