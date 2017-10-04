@@ -83,9 +83,9 @@ class2tree <- function(input, varstep = TRUE, check = TRUE, ...) {
   taxdis <- tryCatch(taxa2dist(df, varstep = varstep, check = check),
                      error = function(e) e)
 
-  for (i in 1:ncol(df)){
-    df[,i][duplicated(df[,i])] <- NA
-  }
+  #for (i in 1:ncol(df)){
+  #  df[,i][duplicated(df[,i])] <- NA
+  #}
 
   # check for incorrect dimensions error
   if (is(taxdis, 'simpleError'))
